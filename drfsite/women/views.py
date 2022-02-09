@@ -1,10 +1,13 @@
-from django.forms import model_to_dict
 from rest_framework import generics
-from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Women
 from .serializers import WomenSerializer
+
+
+class WomenListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Women.objects.all()
+    serializer_class = WomenSerializer
 
 
 class WomenAPIView(APIView):
@@ -33,21 +36,6 @@ class WomenAPIView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({'post': serializer.data})
-
-    def delete(self, request, *args, **kwargs):
-        pk = kwargs.get('pk', None)
-        if not pk:
-            return Response({'error': 'Method DELETE not allowed'})
-
-        try:
-            instance = Women.objects.get(pk=pk)
-        except:
-            return Response({"error": "Method PUT is not allowed"})
-
-        serializer = WomenSerializer(instance=instance)
-        serializer.is_valid(raise_exception=True)
-        serializer.delete()
-
 
 
 # class WomenAPIView(generics.ListAPIView):
