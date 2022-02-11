@@ -15,12 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from women.views import WomenListCreateAPIView, WomenUpdateAPIView, WomenDetailAPIView
+from rest_framework import routers
+from women.views import WomenModelViewSet
+
+router = routers.SimpleRouter()
+router.register('women', WomenModelViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/womenlist/', WomenListCreateAPIView.as_view()),
-    path('api/v1/womenlist/<int:pk>/', WomenUpdateAPIView.as_view()),
-    path('api/v1/womendetail/<int:pk>/', WomenDetailAPIView.as_view()),
+    path('api/v1/', include(router.urls))
+    # path('api/v1/womenlist/<int:pk>/', WomenUpdateAPIView.as_view()),
+    # path('api/v1/womendetail/<int:pk>/', WomenDetailAPIView.as_view()),
 
 ]
