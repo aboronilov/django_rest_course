@@ -20,6 +20,7 @@ from women.views import WomenListCreateAPIView, WomenUpdateAPIView, WomenDeleteA
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/v1/drf-auth/', include('rest_framework.urls')),
     path('api/v1/women/', WomenListCreateAPIView.as_view()),
     path('api/v1/women/<int:pk>/', WomenUpdateAPIView.as_view()),
     path('api/v1/womendelete/<int:pk>/', WomenDeleteAPIView.as_view()),
